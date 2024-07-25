@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel">
+
+    <xacro:include filename="$(find omnibot_description)/urdf/roller.xacro"/>
+
+    <material name="gray">
+        <color rgba="0.8 0.8 0.8 1.0"/>
+    </material>
+
+    <xacro:macro name="wheel" params="number pitch x y z">
+        <link name="wheel_${number}_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://omnibot_description/meshes/wheel/wheel.stl"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
+        </link>
+
+        <joint name="wheel_${number}_joint" type="continuous">
+            <parent link="base_link"/>
+            <child link="wheel_${number}_link"/>
+            <axis xyz="0 1 0"/>
+            <origin rpy="0 ${pitch} 0" xyz="${x} ${y} ${z}"/>
+        </joint>
+
+        <xacro:roller number="1" parent_number="${number}" pitch="-0.257" x="-0.0285" y="-0.002" z="-0.0075"/>
+        <xacro:roller number="2" parent_number="${number}" pitch="-1.3" x="-0.0079" y="-0.002" z="-0.0283"/>
+        <xacro:roller number="3" parent_number="${number}" pitch="0.789" x="0.0206" y="-0.002" z="-0.0208"/>
+        <xacro:roller number="4" parent_number="${number}" pitch="-0.257" x="0.0285" y="-0.002" z="0.0075"/>
+        <xacro:roller number="5" parent_number="${number}" pitch="-1.3" x="0.0079" y="-0.002" z="0.0283"/>
+        <xacro:roller number="6" parent_number="${number}" pitch="0.789" x="-0.0206" y="-0.002" z="0.0208"/>
+        <xacro:roller number="7" parent_number="${number}" pitch="0.25" x="-0.0286" y="0.0122" z="0.0075"/>
+        <xacro:roller number="8" parent_number="${number}" pitch="-0.8" x="-0.0205" y="0.0122" z="-0.021"/>
+        <xacro:roller number="9" parent_number="${number}" pitch="-1.85" x="0.008" y="0.0122" z="-0.0285"/>
+        <xacro:roller number="10" parent_number="${number}" pitch="0.25" x="0.0286" y="0.0122" z="-0.0075"/>
+        <xacro:roller number="11" parent_number="${number}" pitch="-0.8" x="0.0205" y="0.0122" z="0.021"/>
+        <xacro:roller number="12" parent_number="${number}" pitch="-1.85" x="-0.008" y="0.0122" z="0.0285"/>
+    </xacro:macro>
+
+</robot>
