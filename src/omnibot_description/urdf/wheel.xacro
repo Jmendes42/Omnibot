@@ -8,7 +8,7 @@
         <color rgba="0.8 0.8 0.8 1.0"/>
     </material>
 
-    <xacro:macro name="wheel" params="number pitch x y z">
+    <xacro:macro name="wheel" params="number yaw x y">
         <link name="wheel_${number}_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -23,7 +23,7 @@
             <parent link="base_link"/>
             <child link="wheel_${number}_link"/>
             <axis xyz="0 1 0"/>
-            <origin rpy="0 ${pitch} 0" xyz="${x} ${y} ${z}"/>
+            <origin rpy="0 0 ${yaw}" xyz="${x} ${y} -0.0124"/>
         </joint>
 
         <xacro:roller number="1" parent_number="${number}" pitch="-0.257" x="-0.0285" y="-0.002" z="-0.0075"/>

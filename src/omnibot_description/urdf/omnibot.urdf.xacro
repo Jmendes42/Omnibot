@@ -21,6 +21,8 @@
         <origin rpy="0 0 0" xyz="0 0 0.03"/>
     </joint>
 
-    <xacro:wheel number="1" pitch="45" x="0" y="0.0955" z="-0.0124"/>
+    <xacro:wheel number="1" yaw="0" x="0" y="0.0955"/>
+    <xacro:wheel number="2" yaw="2.085" x="-0.0828" y="-0.0475"/>
+    <xacro:wheel number="3" yaw="-2.085" x="0.0828" y="-0.048"/>
 
 </robot>

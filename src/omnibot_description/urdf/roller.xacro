@@ -7,7 +7,7 @@
     </material>
 
     <xacro:macro name="roller" params="number parent_number pitch x y z">
-        <link name="roller_${number}_link">
+        <link name="roller_${parent_number}_${number}_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
@@ -17,9 +17,9 @@
             </visual>
         </link>
 
-        <joint name="roller_${number}_joint" type="continuous">
+        <joint name="roller_${parent_number}_${number}_joint" type="continuous">
             <parent link="wheel_${parent_number}_link"/>
-            <child link="roller_${number}_link"/>
+            <child link="roller_${parent_number}_${number}_link"/>
             <axis xyz="0 0 1"/>
             <origin rpy="0 ${pitch} 0" xyz="${x} ${y} ${z}"/>
         </joint>
