@@ -14,25 +14,25 @@ SimpleParameterNode::SimpleParameterNode()
     declare_parameter<int>("simple_int_param", 42);
     declare_parameter<std::string>("simple_str_param", "Don't panic!");
 
-    param_callback_handle_ = add_on_set_parameters_callback([this](auto const& param) { return paramChangeCallback(param); });
+    _setParametersCallbackHandle = add_on_set_parameters_callback([this](auto const& param) { return paramChangeCallback(param); });
 }
 
 rcl_interfaces::msg::SetParametersResult SimpleParameterNode::paramChangeCallback(const std::vector<rclcpp::Parameter> &parameters)
 {
     rcl_interfaces::msg::SetParametersResult result;
 
-    for (auto const& param : parameters)
+    for (auto const& parameter : parameters)
     {
-        if (param.get_name() == "simple_int_param" && param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+        if (parameter.get_name() == "simple_int_param")
         {
-            RCLCPP_INFO_STREAM(get_logger(), "Param simple_int_param changed! New value is: " << param.as_int());
+            RCLCPP_INFO_STREAM(get_logger(), "Param simple_int_param changed! New value is: " << parameter.as_int());
             result.successful = true;
         }
         else
         {
-            if (param.get_name() == "simple_str_param" &&
-                param.get_type() == rclcpp::ParameterType::PARAMETER_STRING) {
-                RCLCPP_INFO_STREAM(get_logger(), "Param simple_str_param changed! New value is: " << param.as_string());
+            if (parameter.get_name() == "simple_str_param")
+            {
+                RCLCPP_INFO_STREAM(get_logger(), "Param simple_str_param changed! New value is: " << parameter.as_string());
                 result.successful = true;
             }
         }

@@ -13,6 +13,12 @@
                 <mesh filename="package://omnibot_description/meshes/omni_bot_base.stl"/>
             </geometry>
         </visual>
+        <colision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://omnibot_description/meshes/omni_bot_base.stl"/>
+            </geometry>
+        </colision>
     </link>
 
     <joint name="base_joint" type="fixed">

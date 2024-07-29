@@ -15,6 +15,12 @@
                 </geometry>
                 <material name="green"/>
             </visual>
+            <colision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://omnibot_description/meshes/wheel/colision_omni_roller.stl"/>
+                </geometry>
+            </colision>
         </link>
 
         <joint name="roller_${parent_number}_${number}_joint" type="continuous">

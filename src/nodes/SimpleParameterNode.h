@@ -12,7 +12,7 @@ public:
 private:
     rcl_interfaces::msg::SetParametersResult paramChangeCallback(std::vector<rclcpp::Parameter> const& parameters);
 
-    OnSetParametersCallbackHandle::SharedPtr param_callback_handle_;
+    OnSetParametersCallbackHandle::SharedPtr _setParametersCallbackHandle;
 };
 
 
