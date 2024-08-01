@@ -2,11 +2,16 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">
 
-    <xacro:include filename="$(find omnibot_description)/urdf/wheel.xacro"/>
+    <xacro:include filename="$(find omnibot_description)/urdf/omnibot_gazebo.xacro"/>
 
     <link name="base_footprint"/>
 
     <link name="base_link">
+        <inertial>
+            <mass value="1.0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -26,6 +31,8 @@
         <child link="base_link"/>
         <origin rpy="0 0 0" xyz="0 0 0.03"/>
     </joint>
+
+    <xacro:include filename="$(find omnibot_description)/urdf/wheel.xacro"/>
 
     <xacro:wheel number="1" yaw="0" x="0" y="0.0955"/>
     <xacro:wheel number="2" yaw="2.085" x="-0.0828" y="-0.0475"/>

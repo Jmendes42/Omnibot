@@ -8,6 +8,11 @@
 
     <xacro:macro name="roller" params="number parent_number pitch x y z">
         <link name="roller_${parent_number}_${number}_link">
+            <inertial>
+                <mass value="1.0"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+            </inertial>
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
@@ -15,10 +20,11 @@
                 </geometry>
                 <material name="green"/>
             </visual>
+
             <colision>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://omnibot_description/meshes/wheel/colision_omni_roller.stl"/>
+                    <sphere radius="0.0078"/>
                 </geometry>
             </colision>
         </link>
