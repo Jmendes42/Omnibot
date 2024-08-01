@@ -8,8 +8,9 @@
         <color rgba="0.8 0.8 0.8 1.0"/>
     </material>
 
-    <xacro:macro name="wheel" params="number yaw x y">
-        <link name="wheel_${number}_link">
+    <xacro:macro name="wheel" params="id yaw x y">
+
+        <link name="wheel_${id}_link">
             <inertial>
                 <mass value="1.0"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -22,33 +23,33 @@
                 </geometry>
                 <material name="gray"/>
             </visual>
-            <colision>
+            <collision>
                 <origin rpy="1.58 0 0" xyz="0 0.005 0"/>
                 <geometry>
                     <cylinder length="0.028" radius="0.036925"/>
                 </geometry>
-            </colision>
+            </collision>
         </link>
 
-        <joint name="wheel_${number}_joint" type="continuous">
+        <joint name="wheel_${id}_joint" type="continuous">
             <parent link="base_link"/>
-            <child link="wheel_${number}_link"/>
+            <child link="wheel_${id}_link"/>
             <axis xyz="0 1 0"/>
             <origin rpy="0 0 ${yaw}" xyz="${x} ${y} -0.0124"/>
         </joint>
 
-        <xacro:roller number="1" parent_number="${number}" pitch="-0.257" x="-0.0285" y="-0.002" z="-0.0075"/>
-        <xacro:roller number="2" parent_number="${number}" pitch="-1.3" x="-0.0079" y="-0.002" z="-0.0283"/>
-        <xacro:roller number="3" parent_number="${number}" pitch="0.789" x="0.0206" y="-0.002" z="-0.0208"/>
-        <xacro:roller number="4" parent_number="${number}" pitch="-0.257" x="0.0285" y="-0.002" z="0.0075"/>
-        <xacro:roller number="5" parent_number="${number}" pitch="-1.3" x="0.0079" y="-0.002" z="0.0283"/>
-        <xacro:roller number="6" parent_number="${number}" pitch="0.789" x="-0.0206" y="-0.002" z="0.0208"/>
-        <xacro:roller number="7" parent_number="${number}" pitch="0.25" x="-0.0286" y="0.0122" z="0.0075"/>
-        <xacro:roller number="8" parent_number="${number}" pitch="-0.8" x="-0.0205" y="0.0122" z="-0.021"/>
-        <xacro:roller number="9" parent_number="${number}" pitch="-1.85" x="0.008" y="0.0122" z="-0.0285"/>
-        <xacro:roller number="10" parent_number="${number}" pitch="0.25" x="0.0286" y="0.0122" z="-0.0075"/>
-        <xacro:roller number="11" parent_number="${number}" pitch="-0.8" x="0.0205" y="0.0122" z="0.021"/>
-        <xacro:roller number="12" parent_number="${number}" pitch="-1.85" x="-0.008" y="0.0122" z="0.0285"/>
+        <xacro:roller id="1" parent_id="${id}" pitch="-0.257" x="-0.0285" y="-0.002" z="-0.0075"/>
+        <xacro:roller id="2" parent_id="${id}" pitch="-1.3" x="-0.0079" y="-0.002" z="-0.0283"/>
+        <xacro:roller id="3" parent_id="${id}" pitch="0.789" x="0.0206" y="-0.002" z="-0.0208"/>
+        <xacro:roller id="4" parent_id="${id}" pitch="-0.257" x="0.0285" y="-0.002" z="0.0075"/>
+        <xacro:roller id="5" parent_id="${id}" pitch="-1.3" x="0.0079" y="-0.002" z="0.0283"/>
+        <xacro:roller id="6" parent_id="${id}" pitch="0.789" x="-0.0206" y="-0.002" z="0.0208"/>
+        <xacro:roller id="7" parent_id="${id}" pitch="0.25" x="-0.0286" y="0.0122" z="0.0075"/>
+        <xacro:roller id="8" parent_id="${id}" pitch="-0.8" x="-0.0205" y="0.0122" z="-0.021"/>
+        <xacro:roller id="9" parent_id="${id}" pitch="-1.85" x="0.008" y="0.0122" z="-0.0285"/>
+        <xacro:roller id="10" parent_id="${id}" pitch="0.25" x="0.0286" y="0.0122" z="-0.0075"/>
+        <xacro:roller id="11" parent_id="${id}" pitch="-0.8" x="0.0205" y="0.0122" z="0.021"/>
+        <xacro:roller id="12" parent_id="${id}" pitch="-1.85" x="-0.008" y="0.0122" z="0.0285"/>
     </xacro:macro>
 
 </robot>

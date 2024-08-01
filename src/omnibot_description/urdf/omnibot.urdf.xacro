@@ -3,6 +3,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">
 
     <xacro:include filename="$(find omnibot_description)/urdf/omnibot_gazebo.xacro"/>
+    <xacro:include filename="$(find omnibot_description)/urdf/omnibot_ros2_control.xacro"/>
 
     <link name="base_footprint"/>
 
@@ -18,12 +19,12 @@
                 <mesh filename="package://omnibot_description/meshes/omni_bot_base.stl"/>
             </geometry>
         </visual>
-        <colision>
+        <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <mesh filename="package://omnibot_description/meshes/omni_bot_base.stl"/>
             </geometry>
-        </colision>
+        </collision>
     </link>
 
     <joint name="base_joint" type="fixed">
@@ -34,8 +35,8 @@
 
     <xacro:include filename="$(find omnibot_description)/urdf/wheel.xacro"/>
 
-    <xacro:wheel number="1" yaw="0" x="0" y="0.0955"/>
-    <xacro:wheel number="2" yaw="2.085" x="-0.0828" y="-0.0475"/>
-    <xacro:wheel number="3" yaw="-2.085" x="0.0828" y="-0.048"/>
+    <xacro:wheel id="1" yaw="0" x="0" y="0.0955"/>
+    <xacro:wheel id="2" yaw="2.085" x="-0.0828" y="-0.0475"/>
+    <xacro:wheel id="3" yaw="-2.085" x="0.0828" y="-0.048"/>
 
 </robot>
