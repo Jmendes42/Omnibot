@@ -6,8 +6,8 @@
         <color rgba="0 1 0 1.0"/>
     </material>
 
-    <xacro:macro name="roller" params="id parent_id pitch x y z">
-        <link name="roller_${parent_id}_${id}_link">
+    <xacro:macro name="roller" params="id wheel_id pitch x y z">
+        <link name="roller_${wheel_id}_${id}_link">
             <inertial>
                 <mass value="1.0"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -25,12 +25,11 @@
                 <geometry>
                     <mesh filename="package://omnibot_description/meshes/wheel/colision_omni_roller.stl"/>
                 </geometry>
-            </collision>
         </link>
 
-        <joint name="roller_${parent_id}_${id}_joint" type="continuous">
-            <parent link="wheel_${parent_id}_link"/>
-            <child link="roller_${parent_id}_${id}_link"/>
+        <joint name="roller_${wheel_id}_${id}_joint" type="continuous">
+            <parent link="wheel_${wheel_id}_link"/>
+            <child link="roller_${wheel_id}_${id}_link"/>
             <axis xyz="0 0 1"/>
             <origin rpy="0 ${pitch} 0" xyz="${x} ${y} ${z}"/>
         </joint>
