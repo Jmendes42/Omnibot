@@ -11,7 +11,6 @@
     <xacro:macro name="wheel" params="id yaw x y">
 
         <link name="wheel_${id}_link">
-
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
@@ -25,6 +24,11 @@
                     <cylinder length="0.028" radius="0.036925"/>
                 </geometry>
             </collision>
+            <inertial>
+                <origin xyz="-9.4588917160583760242e-06 -8.8415141495200006669e-06 -0.015131125342708530435" rpy="0 0 0"/>
+                <mass value="0.019223052335254620093" />
+                <inertia ixx="5.399262953463332839e-06" ixy="-7.3246329002135788826e-08"  ixz="-1.2642889979755781e-09" iyy="5.6557979176500377362e-06" iyz="1.9098649289524068763e-09" izz="8.6846392930505500327e-06" />
+            </inertial>
         </link>
 
         <joint name="wheel_${id}_joint" type="continuous">
