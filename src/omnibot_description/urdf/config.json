@@ -1,0 +1,7 @@
+{
+  "documentId": "a2723514850fd7244817eeb4",
+  "outputFormat": "urdf",
+  "packageName": "omnibot_description/urdf",
+  "robotName": "omnibot",
+  "assemblyName": "omnibot_v1"
+}
