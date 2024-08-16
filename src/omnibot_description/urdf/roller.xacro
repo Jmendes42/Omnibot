@@ -25,6 +25,7 @@
                 <geometry>
                     <mesh filename="package://omnibot_description/meshes/wheel/colision_omni_roller.stl"/>
                 </geometry>
+            </collision>
         </link>
 
         <joint name="roller_${wheel_id}_${id}_joint" type="continuous">
