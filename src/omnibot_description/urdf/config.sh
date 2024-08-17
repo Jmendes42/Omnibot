@@ -13,8 +13,8 @@
   sed -i 's#meshes/wheel[^\"]*#meshes/wheel.stl#g' robot.urdf
 
   sed -i '1s|^|<?xml version="1.0"?>\n|' robot.urdf
-#  sed -i "3i\<xacro:include filename=\"\$(find omnibot_description)/urdf/omnibot_gazebo.xacro\"/>" robot.urdf
-#  sed -i "4i\<xacro:include filename=\"\$(find omnibot_description)/urdf/omnibot_ros2_control.xacro\"/>" robot.urdf
+  sed -i "3i\<xacro:include filename=\"\$(find omnibot_description)/urdf/omnibot_gazebo.xacro\"/>" robot.urdf
+  sed -i "4i\<xacro:include filename=\"\$(find omnibot_description)/urdf/omnibot_ros2_control.xacro\"/>" robot.urdf
 
   sed -i 's#<robot name="omnibot">#<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">#g' robot.urdf
   sed -i 's/revolute/continuous/g' robot.urdf
