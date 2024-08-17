@@ -1,42 +1,1379 @@
 <?xml version="1.0"?>
-
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">
+<xacro:include filename="$(find omnibot_description)/urdf/omnibot_gazebo.xacro"/>
+<xacro:include filename="$(find omnibot_description)/urdf/omnibot_ros2_control.xacro"/>
+<link name="base_footprint"></link>
+<joint name="base_footprint_to_base" type="fixed">
+<parent link="base_footprint"/>
+<child link="base" />
+<origin rpy="0.0 0 0" xyz="0 0 0"/>
+</joint>
+<link name="base">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/base.stl"/>
+</geometry>
+<material name="base_material">
+<color rgba="0.98039215686274505668 0.71372549019607844922 0.0039215686274509803377 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/base.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="5.6525782187976014595e-17 -6.6023787220193582864e-17 0.0080527486487109532082" rpy="0 0 0"/>
+<mass value="0.33121488483749472742" />
+<inertia ixx="0.0012461406422939467261" ixy="0"  ixz="0" iyy="0.0012461406422939454251" iyz="0" izz="0.002431657443177077764" />
+</inertial>
+</link>
 
-    <xacro:include filename="$(find omnibot_description)/urdf/omnibot_gazebo.xacro"/>
-    <xacro:include filename="$(find omnibot_description)/urdf/omnibot_ros2_control.xacro"/>
+<link name="motor">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/motor.stl"/>
+</geometry>
+<material name="motor_material">
+<color rgba="0.90196078431372550543 0.91764705882352937127 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/motor.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-2.0988305528124536725e-06 0.015050377580170260991 -0.021659280060218950859" rpy="0 0 0"/>
+<mass value="0.12860494827495119741" />
+<inertia ixx="4.6506247208995534436e-05" ixy="1.6921131916578382842e-09"  ixz="-3.4608427741391314945e-09" iyy="4.6246527094885930766e-05" iyz="1.0074294037198133834e-06" izz="1.066124497744399909e-05" />
+</inertial>
+</link>
 
-    <link name="base_footprint"/>
+<link name="wheel">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/wheel.stl"/>
+</geometry>
+<material name="wheel_material">
+<color rgba="0.93784246287025563316 0.77727352216680201114 0.24802940574315235356 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/wheel.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-9.458891716058550513e-06 -8.8415141495199108814e-06 -0.0151311253427085287" rpy="0 0 0"/>
+<mass value="0.019223052335254623563" />
+<inertia ixx="5.399262953463331145e-06" ixy="-7.3246329002135682946e-08"  ixz="-1.2642889979754722209e-09" iyy="5.6557979176500377362e-06" iyz="1.9098649289524929031e-09" izz="8.6846392930505483386e-06" />
+</inertial>
+</link>
 
-    <link name="base_link">
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <mesh filename="package://omnibot_description/meshes/base.stl"/>
-            </geometry>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <mesh filename="package://omnibot_description/meshes/omni_bot_base.stl"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <origin xyz="5.7125161491566575863e-17 -6.5024821714209305867e-17 0.0080527486487109532082" rpy="0 0 0"/>
-            <mass value="0.33121488483749478293" />
-            <inertia ixx="0.0012461406422939467261" ixy="0"  ixz="0" iyy="0.0012461406422939458587" iyz="0" izz="0.0024316574431770781976" />
-        </inertial>
-    </link>
+<link name="roller">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756135754373242931e-11 8.4957117021027906659e-11 2.4283851137571838313e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743846252e-07" ixy="4.2716081056736456509e-16"  ixz="-1.7514569688045876161e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429142877220179384e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
 
-    <joint name="base_joint" type="fixed">
-        <parent link="base_footprint"/>
-        <child link="base_link"/>
-        <origin rpy="0 0 0" xyz="0 0 0.0"/>
-    </joint>
+<joint name="roller2_1" type="continuous">
+<origin xyz="0.020681564833504317152 -0.021119421197575767579 -0.010000000285351307028" rpy="1.570796326794896336 -0.6597090063277464278 2.3457233385922444668" />
+<parent link="wheel" />
+<child link="roller" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
 
-    <xacro:include filename="$(find omnibot_description)/urdf/wheel.xacro"/>
+<link name="roller_2">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_2_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756121876585422192e-11 8.4957096204346194938e-11 2.4283853305976183284e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716078408569811146e-16"  ixz="-1.7514569733174652173e-15" iyy="1.8303636075213768319e-07" iyz="-3.3429142998677468145e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
 
-    <xacro:wheel id="1" yaw="0" x="0" y="0.0955"/>
-    <xacro:wheel id="2" yaw="2.085" x="-0.0828" y="-0.0475"/>
-    <xacro:wheel id="3" yaw="-2.085" x="0.0828" y="-0.048"/>
+<joint name="roller2_2" type="continuous">
+<origin xyz="0.028630754033681701104 0.0073511498047736482941 -0.01000000048162325017" rpy="-1.57079632679489678 -0.95923833802399638415 -2.8902645323988411796" />
+<parent link="wheel" />
+<child link="roller_2" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_3">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_3_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756135754373249393e-11 8.4957089265452303955e-11 2.4283849402848352643e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080577552380755e-16"  ixz="-1.7514569792812796932e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143173382564297e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_3" type="continuous">
+<origin xyz="0.020599080645981818899 0.021035055769849139717 -0.024199995144404309877" rpy="1.570796326794896558 -1.0050751734414828942 0.79586976703605405437" />
+<parent link="wheel" />
+<child link="roller_3" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_4">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_4_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756135754373249393e-11 8.4957103143240124694e-11 2.4283847668124879897e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080872768029044e-16"  ixz="-1.7514569753815174093e-15" iyy="1.8303636075213789495e-07" iyz="-3.3429143089350225275e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_4" type="continuous">
+<origin xyz="0.0079490519369571598085 0.028470515462351391606 -0.00999999706275848943" rpy="1.570796326794896558 1.0765431582887567963 -1.8430676189349801675" />
+<parent link="wheel" />
+<child link="roller_4" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_5">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_5_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797633764e-11 8.4957103143240098845e-11 2.4283849402848359105e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080994071185231e-16"  ixz="-1.7514569732463042444e-15" iyy="1.8303636075213773613e-07" iyz="-3.342914303254452504e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_5" type="continuous">
+<origin xyz="-0.0079173874319013633205 0.028356888222933061133 -0.024199999101464753082" rpy="1.57079632679489678 -1.0027977690887008855 1.8430678811938736583" />
+<parent link="wheel" />
+<child link="roller_5" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_6">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_6_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756114937691531209e-11 8.4957117021027906659e-11 2.4283851137571825389e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743846252e-07" ixy="4.2716080626824243395e-16"  ixz="-1.7514569688045876161e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429143197438218903e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_6" type="continuous">
+<origin xyz="-0.020681651273558431664 0.021119338664790682225 -0.010000000622266080885" rpy="1.57079632679489678 0.6597090063277464278 -0.7958693149975488712" />
+<parent link="wheel" />
+<child link="roller_6" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_7">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_7_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756121876585441579e-11 8.4957103143240098845e-11 2.42838446323588034e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080414299874534e-16"  ixz="-1.7514569734306507828e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429142965122737061e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_7" type="continuous">
+<origin xyz="-0.028516458158703433812 0.0073218567028481632009 -0.024199999573447886214" rpy="-1.570796326794896558 -0.029118128194412656179 -0.25132764401667873067" />
+<parent link="wheel" />
+<child link="roller_7" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_8">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_8_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797633764e-11 8.4957096204346207862e-11 2.428385634174225655e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080577552380755e-16"  ixz="-1.7514569792812796932e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143173382564297e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_8" type="continuous">
+<origin xyz="-0.02059908211981235221 -0.021035064443088044572 -0.02419999841828643361" rpy="1.570796326794896558 -1.0050751734414828942 0.79586976703605405437" />
+<parent link="wheel" />
+<child link="roller_8" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_9">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_9_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756135754373230006e-11 8.4957117021027906659e-11 2.4283848535486617886e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716076857917792248e-16"  ixz="-1.751456967687839831e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429143078393905768e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_9" type="continuous">
+<origin xyz="-0.028516433936169462149 -0.0073217973661773502747 -0.010000001453652984651" rpy="-1.570796326794896558 -0.95923833802399638415 -2.8902645323988411796" />
+<parent link="wheel" />
+<child link="roller_9" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_10">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_10_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756149632161057208e-11 8.4957096204346220787e-11 2.4283849402848355874e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080872768029044e-16"  ixz="-1.7514569753815174093e-15" iyy="1.8303636075213789495e-07" iyz="-3.3429143089350225275e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_10" type="continuous">
+<origin xyz="-0.0082858436691589446021 -0.028375035936988014795 -0.010000003715208150012" rpy="1.570796326794896558 1.0765431582887567963 -1.8430676189349801675" />
+<parent link="wheel" />
+<child link="roller_10" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_11">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_11_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756135754373249393e-11 8.4957110082134002752e-11 2.4283852872295304596e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080511422067532e-16"  ixz="-1.7514569745051181871e-15" iyy="1.8303636075213773613e-07" iyz="-3.342914314594920451e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_11" type="continuous">
+<origin xyz="0.0079173979793228238533 -0.028356884977337862286 -0.024199999508976485774" rpy="1.570796326794896558 1.0027977690887006634 -1.2985247723959187915" />
+<parent link="wheel" />
+<child link="roller_11" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_12">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_12_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756128815479345486e-11 8.495710314324011177e-11 2.4283853739657042585e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081765933730457e-16"  ixz="-1.7514569739582738912e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143227896726155e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller2_12" type="continuous">
+<origin xyz="0.028516471920454564831 -0.0073217858682495711234 -0.024199999328582064151" rpy="-1.570796326794896558 -0.029118128194412718629 -0.25132764401667873067" />
+<parent link="wheel" />
+<child link="roller_12" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="wheel2" type="continuous">
+<origin xyz="1.6916223843148240913e-18 0.015229328657860304735 2.999999999994673594e-05" rpy="3.141592653589793116 -3.460379863012290867e-16 1.570796326794896558" />
+<parent link="motor" />
+<child link="wheel" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="motor1" type="fixed">
+<origin xyz="0.073581777378123131017 -0.041158680771919600727 2.6020852139652106416e-17" rpy="-1.570796326794896336 -1.660721004497953203e-16 -2.0807970750313837804" />
+<parent link="base" />
+<child link="motor" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="motor_2">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/motor.stl"/>
+</geometry>
+<material name="motor_2_material">
+<color rgba="0.90196078431372550543 0.91764705882352937127 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/motor.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-2.0988305528216905668e-06 0.015050377580170260991 -0.021659280060218957797" rpy="0 0 0"/>
+<mass value="0.12860494827495119741" />
+<inertia ixx="4.6506247208995520883e-05" ixy="1.6921131916578120212e-09"  ixz="-3.4608427741392125582e-09" iyy="4.6246527094885930766e-05" iyz="1.0074294037198133834e-06" izz="1.066124497744399909e-05" />
+</inertial>
+</link>
+
+<link name="wheel_2">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/wheel.stl"/>
+</geometry>
+<material name="wheel_2_material">
+<color rgba="0.93784246287025563316 0.77727352216680201114 0.24802940574315235356 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/wheel.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-9.4588917159859343785e-06 -8.841514149794161515e-06 -0.015131125342709179221" rpy="0 0 0"/>
+<mass value="0.019223052335254623563" />
+<inertia ixx="5.3992629534639359265e-06" ixy="-7.3246329002134650625e-08"  ixz="-1.2642889980048470588e-09" iyy="5.655797917650546803e-06" iyz="1.9098649291002472128e-09" izz="8.6846392930512276591e-06" />
+</inertial>
+</link>
+
+<link name="roller_13">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_13_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756121876585435117e-11 8.4957103143240098845e-11 2.4283851137571844776e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743846252e-07" ixy="4.2716080820167912941e-16"  ixz="-1.7514569759688257337e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429143027409348202e-15" izz="9.809706208063898724e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_1" type="continuous">
+<origin xyz="0.020681564833506995565 -0.021119421197577783328 -0.010000000285350016394" rpy="-0.7749270117973218186 1.5707963267948548136 0" />
+<parent link="wheel_2" />
+<child link="roller_13" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_14">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_14_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756121876585441579e-11 8.495708926545229103e-11 2.4283847668124883128e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081112042380309e-16"  ixz="-1.7514569687123478854e-15" iyy="1.8303636075213768319e-07" iyz="-3.3429143044774590641e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_2" type="continuous">
+<origin xyz="-0.0082858436691602352364 -0.028375035936991754859 -0.010000003715207331223" rpy="-1.5707963267948545916 -0.039422984638902945631 1.2985250346548480316" />
+<parent link="wheel_2" />
+<child link="roller_14" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_15">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_15_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797633764e-11 8.4957103143240098845e-11 2.4283849402848359105e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743846252e-07" ixy="4.2716082631578993673e-16"  ixz="-1.7514569761350972994e-15" iyy="1.8303636075213773613e-07" iyz="-3.342914305314726841e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_3" type="continuous">
+<origin xyz="0.028630754033683800119 0.0073511498047768263076 -0.010000000481623513848" rpy="1.5707963267948983344 0.47506888631432148129 0.2513281211909595414" />
+<parent link="wheel_2" />
+<child link="roller_15" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_16">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_16_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756121876585441579e-11 8.495708926545229103e-11 2.4283849402848359105e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081112042380309e-16"  ixz="-1.7514569687123478854e-15" iyy="1.8303636075213768319e-07" iyz="-3.3429143044774590641e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_4" type="continuous">
+<origin xyz="0.0079490519369564867358 0.028470515462357379871 -0.009999997062760127009" rpy="-1.5707963267948545916 -0.039422984638902945631 1.2985250346548480316" />
+<parent link="wheel_2" />
+<child link="roller_16" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_17">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_17_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756114937691537672e-11 8.4957103143240124694e-11 2.4283848535486624348e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081004320628175e-16"  ixz="-1.7514569629515057427e-15" iyy="1.8303636075213789495e-07" iyz="-3.3429143044694426595e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_5" type="continuous">
+<origin xyz="-0.0079173874319012869927 0.028356888222937384064 -0.024199999101468097629" rpy="-1.5707963267948861219 0.03562903164307405085 -1.2985247723958699417" />
+<parent link="wheel_2" />
+<child link="roller_17" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_18">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_18_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756123611308911093e-11 8.4957089265452303955e-11 2.4283849402848359105e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080057779444205e-16"  ixz="-1.7514569660562303405e-15" iyy="1.8303636075213778907e-07" iyz="-3.342914307233993869e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_6" type="continuous">
+<origin xyz="-0.020681651273561196813 0.021119338664792892263 -0.010000000622267801731" rpy="-1.5707963267947777641 -0.32376586976593907385 2.3457233385921831825" />
+<parent link="wheel_2" />
+<child link="roller_18" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_19">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_19_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797640227e-11 8.4957117021027919584e-11 2.4283847668124883128e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743862134e-07" ixy="4.2716078754206219097e-16"  ixz="-1.7514569768206306394e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143051567341733e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_7" type="continuous">
+<origin xyz="-0.028516458158706171205 0.0073218567028507756944 -0.024199999573450814427" rpy="-1.5707963267948970021 -0.49987551737802066176 -0.25132764401668405974" />
+<parent link="wheel_2" />
+<child link="roller_19" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_20">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_20_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756132284926284515e-11 8.4957089265452303955e-11 2.4283849402848359105e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743846252e-07" ixy="4.27160792448144355e-16"  ixz="-1.7514569790042416041e-15" iyy="1.8303636075213778907e-07" iyz="-3.342914301776731435e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_8" type="continuous">
+<origin xyz="-0.028516433936171599328 -0.0073217973661802958352 -0.010000001453653845074" rpy="1.5707963267947118169 0.475068886313615657 0.25132812119087311054" />
+<parent link="wheel_2" />
+<child link="roller_20" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_21">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_21_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756128815479345486e-11 8.495710314324011177e-11 2.4283847668124883128e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743846252e-07" ixy="4.2716080855968895871e-16"  ixz="-1.7514569640819808907e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143071161668432e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_9" type="continuous">
+<origin xyz="-0.020599082119814537961 -0.021035064443090573799 -0.024199998418288681812" rpy="-1.5707963267949580644 0.33636312788314187694 -2.3457228865537405049" />
+<parent link="wheel_2" />
+<child link="roller_21" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_22">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_22_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.075612534603238707e-11 8.4957103143240124694e-11 2.4283848535486621117e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743846252e-07" ixy="4.2716080525753412066e-16"  ixz="-1.7514569716645775844e-15" iyy="1.8303636075213789495e-07" iyz="-3.3429143032891627782e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_10" type="continuous">
+<origin xyz="0.0079173979793252698134 -0.028356884977343323195 -0.024199999508977318441" rpy="-1.5707963267949074382 -0.035629031643076292113 1.8430678811939233963" />
+<parent link="wheel_2" />
+<child link="roller_22" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_23">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_23_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756118407138496088e-11 8.4957117021027919584e-11 2.4283851137571831851e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.271608124260193668e-16"  ixz="-1.7514569661367274822e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143030679042548e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_11" type="continuous">
+<origin xyz="0.028516471920457482636 -0.007321785868253466445 -0.024199999328584589908" rpy="-1.5707963267950737496 -0.49987551737868846091 -0.25132764401660151465" />
+<parent link="wheel_2" />
+<child link="roller_23" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_24">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_24_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756122310266310573e-11 8.495708926545229103e-11 2.4283847668124883128e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080038276879779e-16"  ixz="-1.7514569712013627996e-15" iyy="1.8303636075213773613e-07" iyz="-3.34291431372650884e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller1_" type="continuous">
+<origin xyz="0.020599080645984285676 0.021035055769850537905 -0.024199995144407515646" rpy="-1.570796326794807074 0.3363631278837400651 -2.345722886553691211" />
+<parent link="wheel_2" />
+<child link="roller_24" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="wheel1" type="continuous">
+<origin xyz="-3.9587095435201457741e-17 0.015229328657860325552 2.9999999999558157882e-05" rpy="3.141592653589793116 -6.6889720988138117189e-17 -3.1336648471671013638" />
+<parent link="motor_2" />
+<child link="wheel_2" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="motor2" type="fixed">
+<origin xyz="-0.0011464255543250467632 0.084303028851025418877 -1.561251128379126385e-17" rpy="-1.57079632679489678 2.4978401230941900222e-18 0.013598027361811270558" />
+<parent link="base" />
+<child link="motor_2" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="motor_3">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/motor.stl"/>
+</geometry>
+<material name="motor_3_material">
+<color rgba="0.90196078431372550543 0.91764705882352937127 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/motor.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-2.0988305528127687688e-06 0.015050377580170262726 -0.021659280060218930042" rpy="0 0 0"/>
+<mass value="0.12860494827495119741" />
+<inertia ixx="4.6506247208995534436e-05" ixy="1.6921131916578355959e-09"  ixz="-3.4608427741353955333e-09" iyy="4.6246527094885930766e-05" iyz="1.0074294037198133834e-06" izz="1.066124497744399909e-05" />
+</inertial>
+</link>
+
+<link name="wheel_3">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/wheel.stl"/>
+</geometry>
+<material name="wheel_3_material">
+<color rgba="0.93784246287025563316 0.77727352216680201114 0.24802940574315235356 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/wheel.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-9.4588917160630008241e-06 -8.8415141495134344675e-06 -0.015131125342708447168" rpy="0 0 0"/>
+<mass value="0.019223052335254623563" />
+<inertia ixx="5.3992629534633099691e-06" ixy="-7.3246329002137853468e-08"  ixz="-1.2642889979757236838e-09" iyy="5.6557979176500131722e-06" iyz="1.9098649289547957739e-09" izz="8.6846392930505534208e-06" />
+</inertial>
+</link>
+
+<link name="roller_25">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_25_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756121876585435117e-11 8.4957103143240098845e-11 2.4283847668124873435e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716079307344446715e-16"  ixz="-1.7514569639998764449e-15" iyy="1.8303636075213768319e-07" iyz="-3.342914319890191087e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_1" type="continuous">
+<origin xyz="-0.020681651273558386561 0.021119338664790876514 -0.010000000622265817207" rpy="1.5707963267948985564 0.98155021618507098946 -0.79586931499755286801" />
+<parent link="wheel_3" />
+<child link="roller_25" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_26">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_26_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756114937691537672e-11 8.4957075387664496141e-11 2.4283849402848359105e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.271607991786441658e-16"  ixz="-1.7514569792129941183e-15" iyy="1.8303636075213778907e-07" iyz="-3.342914307224420253e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_2" type="continuous">
+<origin xyz="-0.028516433936169503782 -0.0073217973661773650199 -0.010000001453652873629" rpy="1.5707963267948978903 0.12996521041089167947 0.25132812119095521153" />
+<parent link="wheel_3" />
+<child link="roller_26" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_27">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_27_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756149632161057208e-11 8.495710314324011177e-11 2.4283851137571838313e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081166038563277e-16"  ixz="-1.7514569719356881727e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429142839704135932e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_3" type="continuous">
+<origin xyz="-0.0082858436691589792966 -0.028375035936988181329 -0.010000003715208094501" rpy="1.5707963267948956698 0.9703739388243279862 -1.8430676189349766148" />
+<parent link="wheel_3" />
+<child link="roller_27" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_28">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_28_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756135754373249393e-11 8.495710314324011177e-11 2.4283845933401410383e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081166038563277e-16"  ixz="-1.7514569719356881727e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429142839704135932e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_4" type="continuous">
+<origin xyz="0.0079490519369571285835 0.028470515462351499159 -0.0099999970627584339189" rpy="1.5707963267948956698 0.9703739388243279862 -1.8430676189349766148" />
+<parent link="wheel_3" />
+<child link="roller_28" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_29">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_29_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756121876585448041e-11 8.4957103143240098845e-11 2.4283854607018787036e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716082905289268166e-16"  ixz="-1.7514569694519256916e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429143133522625769e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_5" type="continuous">
+<origin xyz="0.020599080645981773796 0.021035055769849118901 -0.024199995144404254366" rpy="1.5707963267948974462 -0.60012852644593328577 0.7958697670360587173" />
+<parent link="wheel_3" />
+<child link="roller_29" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_30">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_30_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797653152e-11 8.4957117021027906659e-11 2.4283840729230979221e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716082376216184164e-16"  ixz="-1.7514569639998770366e-15" iyy="1.8303636075213768319e-07" iyz="-3.3429142875756479529e-15" izz="9.8097062080638907831e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_6" type="continuous">
+<origin xyz="0.0206815648335043345 -0.021119421197575691251 -0.010000000285351223761" rpy="1.5707963267948945596 -0.98155021618507098946 2.34572333859224047" />
+<parent link="wheel_3" />
+<child link="roller_30" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_31">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_31_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756149632161057208e-11 8.495710314324011177e-11 2.4283853305976180053e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081540534002844e-16"  ixz="-1.7514569686751935228e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143034366332247e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_7" type="continuous">
+<origin xyz="0.0079173979793228238533 -0.028356884977337792897 -0.024199999508976416385" rpy="1.5707963267948983344 1.051990792840859168 -1.2985247723959194577" />
+<parent link="wheel_3" />
+<child link="roller_31" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_32">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_32_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756135754373249393e-11 8.4957103143240098845e-11 2.4283851137571835082e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716080318256488266e-16"  ixz="-1.7514569751651435126e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429142921416442921e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_8" type="continuous">
+<origin xyz="0.028516471920454498912 -0.0073217858682495138775 -0.024199999328581869862" rpy="1.5707963267948952257 0.98120498930390365189 2.8902650095731114988" />
+<parent link="wheel_3" />
+<child link="roller_32" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_33">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_33_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797653152e-11 8.4957103143240098845e-11 2.4283857209104013926e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743862134e-07" ixy="4.2716083899895323078e-16"  ixz="-1.7514569689326392653e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429143054174688742e-15" izz="9.809706208063898724e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_9" type="continuous">
+<origin xyz="-0.0079173874319014240358 0.028356888222933203381 -0.024199999101464600426" rpy="1.5707963267948958919 -1.0519907928408602782 1.8430678811938712158" />
+<parent link="wheel_3" />
+<child link="roller_33" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_34">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_34_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797633764e-11 8.4957106612687063723e-11 2.4283847668124883128e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716081617861900794e-16"  ixz="-1.7514569813247207246e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429143075360199162e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_10" type="continuous">
+<origin xyz="-0.028516458158703447689 0.0073218567028480677911 -0.024199999573447900092" rpy="1.5707963267948956698 0.98120498930390487313 2.8902650095731106106" />
+<parent link="wheel_3" />
+<child link="roller_34" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_35">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_35_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756107998797640227e-11 8.4957103143240098845e-11 2.4283847668124883128e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716082905289268166e-16"  ixz="-1.7514569694519256916e-15" iyy="1.8303636075213773613e-07" iyz="-3.3429143133522625769e-15" izz="9.80970620806389343e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_11" type="continuous">
+<origin xyz="-0.020599082119812324454 -0.02103506444308805845 -0.024199998418286350343" rpy="1.5707963267948974462 -0.60012852644593328577 0.7958697670360587173" />
+<parent link="wheel_3" />
+<child link="roller_35" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="roller_36">
+<visual>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+<material name="roller_36_material">
+<color rgba="0.098039215686274508443 0.098039215686274508443 0.098039215686274508443 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 0" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://omnibot_description/meshes/roller.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="4.0756128815479351948e-11 8.495710314324011177e-11 2.4283845933401413614e-11" rpy="0 0 0"/>
+<mass value="0.0037899803393768708749" />
+<inertia ixx="1.8303635244743851546e-07" ixy="4.2716082512803052003e-16"  ixz="-1.7514569678001716518e-15" iyy="1.8303636075213778907e-07" iyz="-3.3429143061159050204e-15" izz="9.809706208063898724e-08" />
+</inertial>
+</link>
+
+<joint name="roller3_12" type="continuous">
+<origin xyz="0.028630754033681760085 0.0073511498047736847233 -0.010000000481623361193" rpy="1.5707963267948976682 0.12996521041089265092 0.25132812119095498948" />
+<parent link="wheel_3" />
+<child link="roller_36" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="wheel3" type="continuous">
+<origin xyz="2.6263408339213767581e-17 0.015229328657860304735 3.0000000000016124879e-05" rpy="3.141592653589793116 -4.3371326877914994301e-16 -2.6462604399390747822" />
+<parent link="motor_3" />
+<child link="wheel_3" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="motor3" type="fixed">
+<origin xyz="-0.072435351823797927695 -0.043144348079105873661 1.2143064331837649661e-17" rpy="-1.570796326794896558 1.578226579417481623e-16 2.1079931297550063007" />
+<parent link="base" />
+<child link="motor_3" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
 
 </robot>

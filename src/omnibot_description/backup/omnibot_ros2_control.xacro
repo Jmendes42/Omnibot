@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">
+
+    <ros2_control type="system" name="RobotSystem">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+        <xacro:macro name="ros2_control" params="id">
+            <joint name="wheel_${id}_joint">
+                <command_interface name="velocity">
+                    <parameter name="min">-1</parameter>
+                    <parameter name="max">1</parameter>
+                </command_interface>
+
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+        </xacro:macro>
+
+        <xacro:ros2_control id="1"/>
+        <xacro:ros2_control id="2"/>
+        <xacro:ros2_control id="3"/>
+
+    </ros2_control>
+</robot>
