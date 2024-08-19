@@ -8,7 +8,7 @@
         </hardware>
 
         <xacro:macro name="ros2_control" params="id">
-            <joint name="wheel_${id}_joint">
+            <joint name="wheel${id}">
                 <command_interface name="velocity">
                     <parameter name="min">-1</parameter>
                     <parameter name="max">1</parameter>
