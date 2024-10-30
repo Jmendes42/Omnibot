@@ -3,3 +3,7 @@ build/
 install/
 log/
 
+createModel.sh
+
+src/omnibot_description/urdf/meshes/
+src/omnibot_description/urdf/robot.urdf.xacro
