@@ -25,7 +25,7 @@ def generate_launch_description():
 
     model_arg = DeclareLaunchArgument(
         name="model",
-        default_value=os.path.join(omnibot_description, "urdf", "omnibot.urdf.xacro"),
+        default_value=os.path.join(omnibot_description, "urdf", "robot.urdf.xacro"),
         description="Absolute path to robot URDF file"
     )
 

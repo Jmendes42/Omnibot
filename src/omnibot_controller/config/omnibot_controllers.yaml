@@ -12,6 +12,6 @@ controller_manager:
 simple_velocity_controller:
   ros__parameters:
     joints:
-      - wheel1
+      - wheel1test
       - wheel2
       - wheel3

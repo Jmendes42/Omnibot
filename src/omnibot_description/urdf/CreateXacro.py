@@ -6,7 +6,7 @@ import shutil
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # Remove old meshes dir and create new one
-destination_directory = current_directory + "/meshes"
+destination_directory = current_directory + "/../meshes"
 
 if os.path.exists(destination_directory):
     shutil.rmtree(destination_directory)
@@ -41,18 +41,40 @@ if os.path.exists(new_urdf_path):
     with open(new_urdf_path, 'r') as file:
         lines = file.readlines()
 
+    # Define the old and new lines for specific replacements
     target_line = '<robot name="omnibot">'
     new_line = '<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">'
-    modified_lines = [new_line + '\n' if line.strip() == target_line else line for line in lines]
-    modified_lines = [line.replace("revolute", "continuous") for line in modified_lines]
-    modified_lines = [line.replace("package:///", "package://omnibot_description/meshes/") for line in modified_lines]
 
+    # Define the include line to add after replacing target_line
+    include_line = '<xacro:include filename="$(find omnibot_description)/urdf/omnibot_gazebo.xacro"/>\n'
+    include_line2 = '<xacro:include filename="$(find omnibot_description)/urdf/omnibot_ros2_control.xacro"/>\n\n'
+
+    # Create a list to hold the modified lines
+    modified_lines = []
+
+    # Iterate over the original lines and apply replacements
+    for line in lines:
+        # Replace target line and add the include line right after it
+        if line.strip() == target_line:
+            modified_lines.append(new_line + '\n')  # Replace target line
+            modified_lines.append(include_line)  # Add the new include line
+            modified_lines.append(include_line2)  # Add the new include line
+        else:
+            # Perform other replacements
+            line = line.replace("revolute", "continuous")
+            line = line.replace("package://omnibot_description/urdf/", "package://omnibot_description/meshes/")
+            line = line.replace("base_link", "base_footprint")
+            line = line.replace("\"roller\"", "\"roller_1\"")
+            modified_lines.append(line)
+
+    # Add an XML declaration as the first line
     first_line = '<?xml version="1.0"?>\n\n'
 
+    # Write the modified content back to the file
     with open(new_urdf_path, 'w') as file:
         file.write(first_line)
         file.writelines(modified_lines)
 
-    print(f"Replaced the target line and added a new first line to {new_urdf_filename}.")
+    print(f"Replaced target lines and added a new first line to {new_urdf_filename}.")
 else:
     print(f"{new_urdf_filename} file not found.")

@@ -4,6 +4,6 @@ install/
 log/
 
 createModel.sh
+rebuild.sh
 
-src/omnibot_description/urdf/meshes/
-src/omnibot_description/urdf/robot.urdf.xacro
+src/omnibot_description/meshes/

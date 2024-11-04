@@ -6,7 +6,7 @@
         <transmission name="wheel_${id}_transmission">
             <plugin>transmission_interface/SimpleTransmission</plugin>
             <actuator name="wheel_${id}_motor" role="actuator_${id}"/>
-            <joint name="wheel_${id}_joint" role="joint_${id}">
+            <joint name="wheel${id}" role="joint_${id}">
                 <mechanical_reduction>1.0</mechanical_reduction>
             </joint>
         </transmission>
@@ -40,9 +40,9 @@
         </gazebo>
     </xacro:macro>
 
-    <xacro:wheel_link_values id=""/>
-    <xacro:wheel_link_values id="_2"/>
-    <xacro:wheel_link_values id="_3"/>
+    <xacro:wheel_link_values id="1"/>
+    <xacro:wheel_link_values id="1_2"/>
+    <xacro:wheel_link_values id="1_3"/>
 
     <xacro:macro name="roller_link_values" params="id">
         <gazebo reference="roller${id}">
@@ -56,7 +56,7 @@
         </gazebo>
     </xacro:macro>
 
-    <xacro:roller_link_values id=""/>
+    <xacro:roller_link_values id="_1"/>
     <xacro:roller_link_values id="_2"/>
     <xacro:roller_link_values id="_3"/>
     <xacro:roller_link_values id="_4"/>
